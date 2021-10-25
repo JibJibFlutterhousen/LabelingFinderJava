@@ -15,6 +15,8 @@ public class Thread_For_Labeling_Finder extends Thread{
 	private Edge_Relation input_edge_relation;
 	private int input_modulo;
 	private Big_Integer_Counter loop_counter;
+	private int fixed_label;
+	private String output_path;
 
 	public void set_previous_valid_permutation(List<Integer> input){
 		this.previous_valid_permutation = input;
@@ -40,10 +42,24 @@ public class Thread_For_Labeling_Finder extends Thread{
 	public void set_loop_counter(Big_Integer_Counter input){
 		this.loop_counter = input;
 	}
+	public void set_fixed_label(int input){
+		this.fixed_label = input;
+	}
+	public void set_output_path(String input){
+		this.output_path = input;
+	}
 
 	public void run(){
-		System.out.printf("%nTesting %s iterations", loop_counter.get_max().toString());
-		Graph test = Labeling_Finder_Utilities.test_all_labelings(previous_valid_permutation, current_working_list, array_to_permute, used_indexes, number_to_use, input_edge_relation, input_modulo, loop_counter);
-		System.out.printf("%nNo labelings found in %d iterations%n", loop_counter.get_counter());
+		System.out.printf("%nForcing vertex [%s] to have value [%s]. ", String.valueOf(number_to_use), String.valueOf(fixed_label));
+		/*
+			First we must set up our labeling set. This means that we remove the fixed_label from the set
+		*/
+		array_to_permute = Labeling_Finder_Utilities.remove_value_from_int_array(array_to_permute, fixed_label);
+		number_to_use--;
+		/*
+			Now we run the function that permutes everything that's left :)
+		*/
+		Labeling_Finder_Utilities.test_all_labelings(previous_valid_permutation, current_working_list, array_to_permute, used_indexes, number_to_use, input_edge_relation, input_modulo, fixed_label, loop_counter, output_path, this);
+		System.out.printf("No labelings found in %d iterations%n", loop_counter.get_counter());
 	}
 }
