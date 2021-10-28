@@ -5,13 +5,9 @@ public class Graph{
 	private int number_of_vertexes;
 	private Edge_Set edges;
 	private Vertex_Set vertexes;
-	private int iterations;
 /*
 	setters and getters
 */
-	public int get_iterations(){
-		return iterations;
-	}
 	public boolean is_valid(){
 		return valid;
 	}
@@ -50,10 +46,6 @@ public class Graph{
 		edges = new Edge_Set();
 		valid = false;
 	}
-	public Graph(int iterations){
-		this();
-		this.iterations = iterations;
-	}
 /*
 	Here is our function that determines if the labeling is valid
 */
@@ -73,7 +65,28 @@ public class Graph{
 		}
 		return output;
 	}
-
+/*
+	Here's a function that exports the vertex set so that gephi can import this graph's vertex set
+*/
+	public String get_vertex_set_CSV(){
+		String output = "";
+		output += "Id,Label,Interval\n";
+		for(int i = 0; i < vertexes.get_number_of_vertexes(); i++){
+			output += String.format("%d,%d,%n", i, vertexes.get_vertex_at_index(i).get_value());
+		}
+		return output;
+	}
+/*
+	Here's a function that exports the edge set so that gephi can import this graph's edge set
+*/
+	public String get_edge_set_CSV(){
+		String output = "";
+		output += "Source,Target,Type,Id,Label,Interval,Weight\n";
+		for(int i = 0; i < edges.get_number_of_edges(); i++){
+			output += String.format("%d,%d,Undirected,%d,%d,,1.0%n", edges.get_edge_at_index(i).get_endpoint_one().get_name()-1, edges.get_edge_at_index(i).get_endpoint_two().get_name()-1, i, edges.get_edge_at_index(i).get_value());
+		}
+		return output;
+	}
 /*
 	Here's the get_details() function
 */

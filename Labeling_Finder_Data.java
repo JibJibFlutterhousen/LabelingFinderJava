@@ -10,6 +10,8 @@ public class Labeling_Finder_Data{
 	Edge_Relation fancy_fish;
 	Edge_Relation fancy_emerald_object;
 	Edge_Relation c_20;
+	Edge_Relation fancy_K_4xK_2;
+	Edge_Relation K_4xK_2;
 	int[] U11 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	int[] U15 = { 1, 2, 4, 7, 8, 11, 13, 14 };
 	int[] U21 = { 1, 2, 4, 5, 8, 10, 11, 13, 16, 17, 19, 20 };
@@ -20,16 +22,18 @@ public class Labeling_Finder_Data{
 		String output = "";
 
 		output += 
-		"K_4 Snake" +
-		"K_5 Snake" +
-		"Windmill with 9 nodes" +
-		"5 pointed wheel" +
-		"6 pointed wheel" +
-		"8 pointed wheel" +
-		"Fancy crab" +
-		"Lopsided fancy crab" +
-		"Fancy fish" +
-		"Fancy emerald"
+		"K_4 Snake\n" +
+		"K_5 Snake\n" +
+		"Windmill with 9 nodes\n" +
+		"5 pointed wheel\n" +
+		"6 pointed wheel\n" +
+		"8 pointed wheel\n" +
+		"Fancy crab\n" +
+		"Lopsided fancy crab\n" +
+		"Fancy fish\n" +
+		"Fancy emerald\n" +
+		"Weird K_4xK_2\n" +
+		"K_4 x K_2"
 		;
 
 		return output;
@@ -78,6 +82,10 @@ public class Labeling_Finder_Data{
 			return fancy_fish;
 		}else if(input_request == "Fancy emerald"){
 			return fancy_emerald_object;
+		}else if(input_request == "Weird K_4xK_2"){
+			return fancy_K_4xK_2;
+		}else if(input_request == "K_4 x K_2"){
+			return K_4xK_2;
 		}else{
 			System.out.printf("Graph not found!%n");
 			return new Edge_Relation(1);
@@ -104,6 +112,10 @@ public class Labeling_Finder_Data{
 			return 6;
 		}else if(input_request == "Fancy emerald"){
 			return 7;
+		}else if(input_request == "Weird K_4xK_2"){
+			return 8;
+		}else if(input_request == "K_4 x K_2"){
+			return 8;
 		}else{
 			System.out.printf("Graph not found!%n");
 			return -1;
@@ -312,8 +324,45 @@ public class Labeling_Finder_Data{
 			c_20.add_relation(18, 19);
 			c_20.add_relation(19, 0);
 		/*
-
+			this is (an incorrect version of) K_4 x K_2
 		*/
+		fancy_K_4xK_2 = new Edge_Relation(16);
+			fancy_K_4xK_2.add_relation(0,1);
+			fancy_K_4xK_2.add_relation(0,3);
+			fancy_K_4xK_2.add_relation(0,4);
+			fancy_K_4xK_2.add_relation(1,2);
+			fancy_K_4xK_2.add_relation(1,3);
+			fancy_K_4xK_2.add_relation(3,2);
+			fancy_K_4xK_2.add_relation(0,7);
+			fancy_K_4xK_2.add_relation(1,5);
+			fancy_K_4xK_2.add_relation(2,6);
+			fancy_K_4xK_2.add_relation(3,4);
+			fancy_K_4xK_2.add_relation(4,5);
+			fancy_K_4xK_2.add_relation(4,6);
+			fancy_K_4xK_2.add_relation(4,7);
+			fancy_K_4xK_2.add_relation(5,6);
+			fancy_K_4xK_2.add_relation(5,7);
+			fancy_K_4xK_2.add_relation(6,7);
+		/*
+			this is K_4 x K_2
+		*/
+		K_4xK_2 = new Edge_Relation(16);
+			K_4xK_2.add_relation(0,1);
+			K_4xK_2.add_relation(0,3);
+			K_4xK_2.add_relation(0,2);
+			K_4xK_2.add_relation(1,2);
+			K_4xK_2.add_relation(1,3);
+			K_4xK_2.add_relation(3,2);
+			K_4xK_2.add_relation(0,7);
+			K_4xK_2.add_relation(1,5);
+			K_4xK_2.add_relation(2,6);
+			K_4xK_2.add_relation(3,4);
+			K_4xK_2.add_relation(4,5);
+			K_4xK_2.add_relation(4,6);
+			K_4xK_2.add_relation(4,7);
+			K_4xK_2.add_relation(5,6);
+			K_4xK_2.add_relation(5,7);
+			K_4xK_2.add_relation(6,7);
 	}
 
 }

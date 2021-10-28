@@ -27,7 +27,7 @@ public class test2{
 		/*
 			Now we set up each of our different threads with their respective information
 		*/
-		Thread_For_Labeling_Finder[] threads = new Thread_For_Labeling_Finder[number_of_vertexes];
+		Thread_For_Labeling_Finder[] threads = new Thread_For_Labeling_Finder[labeling_set.length];
 		for(int i = 0; i < threads.length; i++){
 			threads[i] = new Thread_For_Labeling_Finder();
 			threads[i].set_previous_valid_permutation(new ArrayList<>());
@@ -39,7 +39,7 @@ public class test2{
 			threads[i].set_input_modulo(modulo);
 			threads[i].set_loop_counter(loop_counter);
 			threads[i].set_fixed_label(labeling_set[i]);
-			threads[i].set_output_path(String.format("Outputs\\Thread (%s) labeling (%s) by forcing vertex (%s) to have value (%s).txt", String.valueOf(i), graph_to_label, String.valueOf(number_of_vertexes), String.valueOf(labeling_set[i])));
+			threads[i].set_output_path(String.format("Outputs\\Thread (%s) labeling (%s) by forcing vertex (%s) to have value (%s)", String.valueOf(i), graph_to_label, String.valueOf(number_of_vertexes), String.valueOf(labeling_set[i])));
 		}
 		/*
 			Now we tell all the respective threads to run! :)

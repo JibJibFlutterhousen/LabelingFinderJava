@@ -14,6 +14,9 @@ public class Edge_Set{
 	public String get_name_of_edge_at_index(int input_index){
 		return edges[input_index].get_name();
 	}
+	public Edge get_edge_at_index(int input_index){
+		return edges[input_index];
+	}
 	public int get_value_of_edge_at_index(int input_index){
 		return edges[input_index].get_value();
 	}

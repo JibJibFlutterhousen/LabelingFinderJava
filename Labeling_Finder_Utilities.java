@@ -95,10 +95,10 @@ public class Labeling_Finder_Utilities{
 */
 	public static Graph test_all_labelings(List<Integer> previous_valid_permutation, List<Integer> current_working_list, int[] array_to_permute, boolean[] used_indexes, int number_to_use, Edge_Relation input_edge_relation, int input_modulo, int input_fixed_labeling, Big_Integer_Counter loop_counter, String output_path, Thread input_thread){
 		Graph output = new Graph();
-		try{
-			File file_to_create = new File(output_path);
-			file_to_create.createNewFile();
-			try(FileWriter  output_stream = new FileWriter (output_path)){
+		// try{
+		// 	File file_to_create = new File(output_path);
+		// 	file_to_create.createNewFile();
+		// 	try(FileWriter  output_stream = new FileWriter (output_path)){
 				if(current_working_list.size() == number_to_use){
 					/*
 						We've gathered enough elements to try and permute the things, first make sure it's not a duplicate
@@ -128,9 +128,38 @@ public class Labeling_Finder_Utilities{
 								We've found a valid graph! woo hoo!
 							*/
 							System.out.printf("%nIterations tried: %s", loop_counter.get_counter().toString());
-							String valid_graph_description = String.format("Valid graph found:%n%s%n", output.get_Vertex_Set_details());
-							output_stream.write(valid_graph_description);
-							output_stream.close();
+							/*
+								Push the vertex set to a csv file that gephi can import
+							*/
+							try{
+								File vertex_set_file = new File(String.format("%s_Vertex_Set.csv", output_path));
+								vertex_set_file.createNewFile();
+								try(FileWriter output_vertex_set_stream = new FileWriter(String.format("%s_Vertex_Set.csv", output_path))){
+									output_vertex_set_stream.write(output.get_vertex_set_CSV());
+									output_vertex_set_stream.close();
+								}catch(java.io.FileNotFoundException e){
+									System.out.println("Printing stack trace... (couldn't find the csv file for vertexes)");
+								}
+							}catch(IOException e){
+								System.out.println("Printing stack trace... (problem creating the csv file for vertexes)");
+								e.printStackTrace();
+							}
+							/*
+								Push the edge set to a csv file that gephi can import
+							*/
+							try{
+								File edge_set_file = new File(String.format("%s_Edge_Set.csv", output_path));
+								edge_set_file.createNewFile();
+								try(FileWriter output_edge_set_stream = new FileWriter(String.format("%s_Edge_Set.csv", output_path))){
+									output_edge_set_stream.write(output.get_edge_set_CSV());
+									output_edge_set_stream.close();
+								}catch(java.io.FileNotFoundException e){
+									System.out.println("Printing stack trace... (couldn't find the csv file for edges)");
+								}
+							}catch(IOException e){
+								System.out.println("Printing stack trace... (problem creating the csv file for edges)");
+								e.printStackTrace();
+							}
 							/*
 								NOW WE GET TO STOP!
 							*/
@@ -170,17 +199,6 @@ public class Labeling_Finder_Utilities{
 						current_working_list.remove(current_working_list.size()-1);
 					}
 				}
-				output_stream.close();
-			}catch(java.io.FileNotFoundException e){
-				System.out.println("Printing stack trace...");
-				e.printStackTrace();
-			}finally{
-			}
-		}catch(IOException e){
-			System.out.println("Printing stack trace...");
-			e.printStackTrace();
-		}
-		
 		return output;
 	}
 }
