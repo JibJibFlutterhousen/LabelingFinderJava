@@ -95,110 +95,106 @@ public class Labeling_Finder_Utilities{
 */
 	public static Graph test_all_labelings(List<Integer> previous_valid_permutation, List<Integer> current_working_list, int[] array_to_permute, boolean[] used_indexes, int number_to_use, Edge_Relation input_edge_relation, int input_modulo, int input_fixed_labeling, Big_Integer_Counter loop_counter, String output_path, Thread input_thread){
 		Graph output = new Graph();
-		// try{
-		// 	File file_to_create = new File(output_path);
-		// 	file_to_create.createNewFile();
-		// 	try(FileWriter  output_stream = new FileWriter (output_path)){
-				if(current_working_list.size() == number_to_use){
+			if(current_working_list.size() == number_to_use){
+				/*
+					We've gathered enough elements to try and permute the things, first make sure it's not a duplicate
+				*/
+				if(!current_working_list.equals(previous_valid_permutation)){
 					/*
-						We've gathered enough elements to try and permute the things, first make sure it's not a duplicate
+						at this point, we have gathered enough elements to fill up all the vertexes except the fixed one, so we will add that one in now!
 					*/
-					if(!current_working_list.equals(previous_valid_permutation)){
-						/*
-							at this point, we have gathered enough elements to fill up all the vertexes except the fixed one, so we will add that one in now!
-						*/
-						current_working_list.add(input_fixed_labeling);
-						/*
-							now we've got a potentially valid labeling, so we will check it!
-						*/
-						loop_counter.iterate();
-						output = new Graph(new Vertex_Set(new Labeling_Set(current_working_list)), input_edge_relation, input_modulo);
-						/*
-							progress updater: update every .001 of a percent
-						*/
-						if(loop_counter.show_update()){
-							String output_string = loop_counter.update_to_show();
-							if(output_string.length() > 3){
-								output_string += " || " + output.get_vertex_set_values();
-							}
-							System.out.printf("%s", output_string);
-						}
-						if (output.is_valid()){
-							/*
-								We've found a valid graph! woo hoo!
-							*/
-							System.out.printf("%nIterations tried: %s", loop_counter.get_counter().toString());
-							/*
-								Push the vertex set to a csv file that gephi can import
-							*/
-							try{
-								File vertex_set_file = new File(String.format("%s_Vertex_Set.csv", output_path));
-								vertex_set_file.createNewFile();
-								try(FileWriter output_vertex_set_stream = new FileWriter(String.format("%s_Vertex_Set.csv", output_path))){
-									output_vertex_set_stream.write(output.get_vertex_set_CSV());
-									output_vertex_set_stream.close();
-								}catch(java.io.FileNotFoundException e){
-									System.out.println("Printing stack trace... (couldn't find the csv file for vertexes)");
-								}
-							}catch(IOException e){
-								System.out.println("Printing stack trace... (problem creating the csv file for vertexes)");
-								e.printStackTrace();
-							}
-							/*
-								Push the edge set to a csv file that gephi can import
-							*/
-							try{
-								File edge_set_file = new File(String.format("%s_Edge_Set.csv", output_path));
-								edge_set_file.createNewFile();
-								try(FileWriter output_edge_set_stream = new FileWriter(String.format("%s_Edge_Set.csv", output_path))){
-									output_edge_set_stream.write(output.get_edge_set_CSV());
-									output_edge_set_stream.close();
-								}catch(java.io.FileNotFoundException e){
-									System.out.println("Printing stack trace... (couldn't find the csv file for edges)");
-								}
-							}catch(IOException e){
-								System.out.println("Printing stack trace... (problem creating the csv file for edges)");
-								e.printStackTrace();
-							}
-							/*
-								NOW WE GET TO STOP!
-							*/
-							input_thread.stop();
-						}
-						/*
-							Now we delete the old permutation, and begin working towards the next iteration. It's a formality, however, that we have to first remove the fixed labeling value off of the end of the list
-						*/
-						current_working_list.remove(current_working_list.size()-1);
-						previous_valid_permutation = new ArrayList<>(current_working_list);
-						return output;
-					}
-				}else{
+					current_working_list.add(input_fixed_labeling);
 					/*
-						we need to determine the next element we're going to use
+						now we've got a potentially valid labeling, so we will check it!
 					*/
-					for(int i = 0; i < array_to_permute.length; i++){
-						if(used_indexes[i] || i > 0 && array_to_permute[i] == array_to_permute[i-1] && !used_indexes[i-1]){
-							/*
-								this is the case where an element is already used, or not valid to use
-							*/
-							continue;
+					loop_counter.iterate();
+					output = new Graph(new Vertex_Set(new Labeling_Set(current_working_list)), input_edge_relation, input_modulo);
+					/*
+						progress updater: update every .001 of a percent
+					*/
+					if(loop_counter.show_update()){
+						String output_string = loop_counter.update_to_show();
+						if(output_string.length() > 3){
+							output_string += " || " + output.get_vertex_set_values();
+						}
+						System.out.printf("%s", output_string);
+					}
+					if (output.is_valid()){
+						/*
+							We've found a valid graph! woo hoo!
+						*/
+						System.out.printf("%nIterations tried: %s", loop_counter.get_counter().toString());
+						/*
+							Push the vertex set to a csv file that gephi can import
+						*/
+						try{
+							File vertex_set_file = new File(String.format("%s_Vertex_Set.csv", output_path));
+							vertex_set_file.createNewFile();
+							try(FileWriter output_vertex_set_stream = new FileWriter(String.format("%s_Vertex_Set.csv", output_path))){
+								output_vertex_set_stream.write(output.get_vertex_set_CSV());
+								output_vertex_set_stream.close();
+							}catch(java.io.FileNotFoundException e){
+								System.out.println("Printing stack trace... (couldn't find the csv file for vertexes)");
+							}
+						}catch(IOException e){
+							System.out.println("Printing stack trace... (problem creating the csv file for vertexes)");
+							e.printStackTrace();
 						}
 						/*
-							we're good to use the ith index of array_to_permute in our next permutation (:
+							Push the edge set to a csv file that gephi can import
 						*/
-						used_indexes[i] = true;
-						current_working_list.add(array_to_permute[i]);
+						try{
+							File edge_set_file = new File(String.format("%s_Edge_Set.csv", output_path));
+							edge_set_file.createNewFile();
+							try(FileWriter output_edge_set_stream = new FileWriter(String.format("%s_Edge_Set.csv", output_path))){
+								output_edge_set_stream.write(output.get_edge_set_CSV());
+								output_edge_set_stream.close();
+							}catch(java.io.FileNotFoundException e){
+								System.out.println("Printing stack trace... (couldn't find the csv file for edges)");
+							}
+						}catch(IOException e){
+							System.out.println("Printing stack trace... (problem creating the csv file for edges)");
+							e.printStackTrace();
+						}
 						/*
-							now we go pick the remaining elements, until we get enough to be another candidate for a unique permutation!
+							NOW WE GET TO STOP!
 						*/
-						test_all_labelings(previous_valid_permutation, current_working_list, array_to_permute, used_indexes, number_to_use, input_edge_relation, input_modulo, input_fixed_labeling, loop_counter, output_path, input_thread);
-						/*
-							the above line keeps repeating (via the recursion) until all possible permutations with the given element have been listed, so we move on to the next element
-						*/
-						used_indexes[i] = false;
-						current_working_list.remove(current_working_list.size()-1);
+						input_thread.stop();
 					}
+					/*
+						Now we delete the old permutation, and begin working towards the next iteration. It's a formality, however, that we have to first remove the fixed labeling value off of the end of the list
+					*/
+					current_working_list.remove(current_working_list.size()-1);
+					previous_valid_permutation = new ArrayList<>(current_working_list);
+					return output;
 				}
+			}else{
+				/*
+					we need to determine the next element we're going to use
+				*/
+				for(int i = 0; i < array_to_permute.length; i++){
+					if(used_indexes[i] || i > 0 && array_to_permute[i] == array_to_permute[i-1] && !used_indexes[i-1]){
+						/*
+							this is the case where an element is already used, or not valid to use
+						*/
+						continue;
+					}
+					/*
+						we're good to use the ith index of array_to_permute in our next permutation (:
+					*/
+					used_indexes[i] = true;
+					current_working_list.add(array_to_permute[i]);
+					/*
+						now we go pick the remaining elements, until we get enough to be another candidate for a unique permutation!
+					*/
+					test_all_labelings(previous_valid_permutation, current_working_list, array_to_permute, used_indexes, number_to_use, input_edge_relation, input_modulo, input_fixed_labeling, loop_counter, output_path, input_thread);
+					/*
+						the above line keeps repeating (via the recursion) until all possible permutations with the given element have been listed, so we move on to the next element
+					*/
+					used_indexes[i] = false;
+					current_working_list.remove(current_working_list.size()-1);
+				}
+			}
 		return output;
 	}
 }

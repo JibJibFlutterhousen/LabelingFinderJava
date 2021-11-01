@@ -23,14 +23,12 @@ public class Big_Integer_Counter{
 		if(TimeUnit.MILLISECONDS.toSeconds(since_last_update) != 0){
 			output += String.format("%nNow at %.3f%%, or %s out of %s, it took %s seconds since last report", get_percent_done(), NumberFormat.getNumberInstance(Locale.US).format(get_counter()), NumberFormat.getNumberInstance(Locale.US).format(get_max()), String.valueOf(TimeUnit.MILLISECONDS.toSeconds(since_last_update)));
 		}else{
-			//output += ".";
 			output += String.format("%nNow at %.3f%%, or %s out of %s, it took %s seconds since last report", get_percent_done(), NumberFormat.getNumberInstance(Locale.US).format(get_counter()), NumberFormat.getNumberInstance(Locale.US).format(get_max()), String.valueOf(TimeUnit.MILLISECONDS.toSeconds(since_last_update)));
 		}
 		return output;
 	}
 	public boolean show_update(){
 		BigInteger mod = counter.mod(max.divide(new BigInteger("1000")));
-		//BigInteger mod = counter.mod(max);
 		if((last_update_shown_time - System.currentTimeMillis()) > 10000){
 			return  true;
 		}

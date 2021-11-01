@@ -6,7 +6,7 @@ import java.text.NumberFormat;
 
 public class test2{
 	public static void main(String args[]){		
-		String graph_to_label = "K_5 Snake";
+		String graph_to_label = "Lopsided fancy crab";
 		
 		/*
 			Set up the attributes that are dependent on our graph

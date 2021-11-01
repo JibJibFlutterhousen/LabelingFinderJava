@@ -69,7 +69,6 @@ public class Thread_For_Labeling_Finder extends Thread{
 			Now we run the function that permutes everything that's left :)
 		*/
 		Labeling_Finder_Utilities.test_all_labelings(previous_valid_permutation, current_working_list, array_to_permute, used_indexes, number_to_use, input_edge_relation, input_modulo, fixed_label, loop_counter, output_path, this);
-		//System.out.printf("No labelings found in %d iterations%n", loop_counter.get_counter());
 		/*
 			Push the fact that we didn't find any labelings to a file
 		*/
