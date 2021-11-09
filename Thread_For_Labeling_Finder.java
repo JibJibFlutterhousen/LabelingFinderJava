@@ -20,6 +20,7 @@ public class Thread_For_Labeling_Finder extends Thread{
 	private Big_Integer_Counter loop_counter;
 	private int fixed_label;
 	private String output_path;
+	private boolean is_tree;
 
 	public void set_previous_valid_permutation(List<Integer> input){
 		this.previous_valid_permutation = input;
@@ -51,13 +52,22 @@ public class Thread_For_Labeling_Finder extends Thread{
 	public void set_output_path(String input){
 		this.output_path = input;
 	}
+	public void set_is_tree(boolean input){
+		this.is_tree = input;
+	}
 
 	public void run(){
 		System.out.printf("%nForcing vertex [%s] to have value [%s]. ", String.valueOf(number_to_use), String.valueOf(fixed_label));
 		/*
 			First we must set up our labeling set. This means that we remove the fixed_label from the set
+			Note: we only do this in the event of a tree
 		*/
-		array_to_permute = Labeling_Finder_Utilities.remove_value_from_int_array(array_to_permute, fixed_label);
+		if(!is_tree){
+			array_to_permute = Labeling_Finder_Utilities.remove_value_from_int_array(array_to_permute, fixed_label);
+		}
+		/*
+			Since we're still "fixing" one of the possible values, we still are only looking for a permutation that has one less element, so we decrement number_to_use
+		*/
 		number_to_use--;
 		/*
 			Now we set up our loop counter

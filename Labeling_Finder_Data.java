@@ -12,6 +12,7 @@ public class Labeling_Finder_Data{
 	Edge_Relation c_20;
 	Edge_Relation fancy_K_4xK_2;
 	Edge_Relation K_4xK_2;
+	Edge_Relation Tree_1;
 	int[] U11 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	int[] U15 = { 1, 2, 4, 7, 8, 11, 13, 14 };
 	int[] U21 = { 1, 2, 4, 5, 8, 10, 11, 13, 16, 17, 19, 20 };
@@ -33,7 +34,8 @@ public class Labeling_Finder_Data{
 		"Fancy fish\n" +
 		"Fancy emerald\n" +
 		"Weird K_4xK_2\n" +
-		"K_4 x K_2"
+		"K_4 x K_2" +
+		"Tree 1"
 		;
 
 		return output;
@@ -86,6 +88,8 @@ public class Labeling_Finder_Data{
 			return fancy_K_4xK_2;
 		}else if(input_request == "K_4 x K_2"){
 			return K_4xK_2;
+		}else if(input_request == "Tree 1"){
+			return Tree_1;
 		}else{
 			System.out.printf("Graph not found!%n");
 			return new Edge_Relation(1);
@@ -116,9 +120,46 @@ public class Labeling_Finder_Data{
 			return 8;
 		}else if(input_request == "K_4 x K_2"){
 			return 8;
+		}else if(input_request == "Tree 1"){
+			return 13;
 		}else{
 			System.out.printf("Graph not found!%n");
 			return -1;
+		}
+	}
+/*
+	This function returns a boolean representing if a graph is a tree or not
+*/
+	public boolean is_tree(String input_request){
+		if(input_request == "K_4 Snake"){
+			return false;
+		}else if(input_request == "K_5 Snake"){
+			return false;
+		}else if(input_request == "Windmill with 9 nodes"){
+			return false;
+		}else if(input_request == "5 pointed wheel"){
+			return false;
+		}else if(input_request == "6 pointed wheel"){
+			return false;
+		}else if(input_request == "8 pointed wheel"){
+			return false;
+		}else if(input_request == "Fancy crab"){
+			return false;
+		}else if(input_request == "Lopsided fancy crab"){
+			return false;
+		}else if(input_request == "Fancy fish"){
+			return false;
+		}else if(input_request == "Fancy emerald"){
+			return false;
+		}else if(input_request == "Weird K_4xK_2"){
+			return false;
+		}else if(input_request == "K_4 x K_2"){
+			return false;
+		}else if(input_request == "Tree 1"){
+			return true;
+		}else{
+			System.out.printf("Graph not found!%n");
+			return false;
 		}
 	}
 
@@ -363,6 +404,22 @@ public class Labeling_Finder_Data{
 			K_4xK_2.add_relation(5,6);
 			K_4xK_2.add_relation(5,7);
 			K_4xK_2.add_relation(6,7);
+		/*
+			this is Tree 1
+		*/
+		Tree_1 = new Edge_Relation(12);
+			Tree_1.add_relation(0,1);
+			Tree_1.add_relation(0,2);
+			Tree_1.add_relation(1,3);
+			Tree_1.add_relation(1,4);
+			Tree_1.add_relation(3,7);
+			Tree_1.add_relation(3,8);
+			Tree_1.add_relation(4,9);
+			Tree_1.add_relation(2,5);
+			Tree_1.add_relation(2,6);
+			Tree_1.add_relation(5,10);
+			Tree_1.add_relation(6,11);
+			Tree_1.add_relation(6,12);
 	}
 
 }

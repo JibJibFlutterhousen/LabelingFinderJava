@@ -6,7 +6,7 @@ import java.text.NumberFormat;
 
 public class test2{
 	public static void main(String args[]){		
-		String graph_to_label = "Lopsided fancy crab";
+		String graph_to_label = "Tree 1";
 		
 		/*
 			Set up the attributes that are dependent on our graph
@@ -40,6 +40,7 @@ public class test2{
 			threads[i].set_loop_counter(loop_counter);
 			threads[i].set_fixed_label(labeling_set[i]);
 			threads[i].set_output_path(String.format("Outputs\\Thread (%s) labeling (%s) by forcing vertex (%s) to have value (%s)", String.valueOf(i), graph_to_label, String.valueOf(number_of_vertexes), String.valueOf(labeling_set[i])));
+			threads[i].set_is_tree(listing.is_tree(graph_to_label));
 		}
 		/*
 			Now we tell all the respective threads to run! :)
