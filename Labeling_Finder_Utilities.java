@@ -59,6 +59,51 @@ public class Labeling_Finder_Utilities{
 		return output;
 	}
 /*
+	This function takes an input graph, and pushes it's edge set and vertex set to the given path
+		Note: both of these files are formatted for Gephi
+*/
+	public static void push_graph_to_files(Graph input_graph, String output_location){
+		/*
+			Some housekeeping formatting the output vertex set location and output edge set location
+		*/
+		String output_vertex_set_location = String.format("%s_Vertex_Set_labeling.csv", output_location);
+		String output_edge_set_location = String.format("%s_Edge_Set_labeling.csv", output_location);
+		/*
+			Push the vertex set to a csv file that gephi can import
+		*/
+		try{
+			File vertex_set_file = new File(output_vertex_set_location);
+			vertex_set_file.createNewFile();
+			try(FileWriter output_vertex_set_stream = new FileWriter(output_vertex_set_location)){
+				output_vertex_set_stream.write(input_graph.get_vertex_set_CSV());
+				output_vertex_set_stream.close();
+			}catch(java.io.FileNotFoundException e){
+				System.out.println("Printing stack trace... (couldn't find the csv file for vertexes)");
+				e.printStackTrace();
+			}
+		}catch(IOException e){
+			System.out.println("Printing stack trace... (problem creating the csv file for vertexes)");
+			e.printStackTrace();
+		}
+		/*
+			Push the edge set to a csv file that gephi can import
+		*/
+		try{
+			File edge_set_file = new File(output_edge_set_location);
+			edge_set_file.createNewFile();
+			try(FileWriter output_edge_set_stream = new FileWriter(output_edge_set_location)){
+				output_edge_set_stream.write(input_graph.get_edge_set_CSV());
+				output_edge_set_stream.close();
+			}catch(java.io.FileNotFoundException e){
+				System.out.printf("Printing stack trace... (couldn't find the csv file for edges at location %s)%n", output_location);
+				e.printStackTrace();
+			}
+		}catch(IOException e){
+			System.out.printf("Printing stack trace... (problem creating the csv file for edges at location %s)%n", output_location);
+			e.printStackTrace();
+		}
+	}
+/*
 	this function is the primary permutation generator. this is where we have to "prune" off the labeling list to only use the first number_to_use numbers. This is a formality since the number of edges on a graph is what we're trying to make a rainbow, while the number of vertexes may be far fewer than the number of edges
 
 	Since it's gotten rather lengthy, here's the argument list and why they're there:
@@ -93,8 +138,7 @@ public class Labeling_Finder_Utilities{
 		import java.util.Arrays;
 		import java.util.List;
 */
-	public static Graph test_all_labelings(List<Integer> previous_valid_permutation, List<Integer> current_working_list, int[] array_to_permute, boolean[] used_indexes, int number_to_use, Edge_Relation input_edge_relation, int input_modulo, int input_fixed_labeling, Big_Integer_Counter loop_counter, String output_path, Thread input_thread){
-		Graph output = new Graph();
+	public static void test_all_labelings(List<Integer> previous_valid_permutation, List<Integer> current_working_list, int[] array_to_permute, boolean[] used_indexes, int number_to_use, Edge_Relation input_edge_relation, int input_modulo, int input_fixed_labeling, Big_Integer_Counter loop_counter, String output_path, Thread_For_Labeling_Finder input_thread){
 			if(current_working_list.size() == number_to_use){
 				/*
 					We've gathered enough elements to try and permute the things, first make sure it's not a duplicate
@@ -108,65 +152,32 @@ public class Labeling_Finder_Utilities{
 						now we've got a potentially valid labeling, so we will check it!
 					*/
 					loop_counter.iterate();
-					output = new Graph(new Vertex_Set(new Labeling_Set(current_working_list)), input_edge_relation, input_modulo);
+					Graph possible_labeling = new Graph(new Vertex_Set(new Labeling_Set(current_working_list)), input_edge_relation, input_modulo);
 					/*
 						progress updater: update every .001 of a percent
 					*/
 					if(loop_counter.show_update()){
 						String output_string = loop_counter.update_to_show();
 						if(output_string.length() > 3){
-							output_string += " || " + output.get_vertex_set_values();
+							output_string += " || " + possible_labeling.get_vertex_set_values();
 						}
 						System.out.printf("%s", output_string);
 					}
-					if (output.is_valid()){
+					if (possible_labeling.is_valid()){
 						/*
 							We've found a valid graph! woo hoo!
 						*/
-						System.out.printf("%nIterations tried: %s", loop_counter.get_counter().toString());
-						/*
-							Push the vertex set to a csv file that gephi can import
-						*/
-						try{
-							File vertex_set_file = new File(String.format("%s_Vertex_Set.csv", output_path));
-							vertex_set_file.createNewFile();
-							try(FileWriter output_vertex_set_stream = new FileWriter(String.format("%s_Vertex_Set.csv", output_path))){
-								output_vertex_set_stream.write(output.get_vertex_set_CSV());
-								output_vertex_set_stream.close();
-							}catch(java.io.FileNotFoundException e){
-								System.out.println("Printing stack trace... (couldn't find the csv file for vertexes)");
-							}
-						}catch(IOException e){
-							System.out.println("Printing stack trace... (problem creating the csv file for vertexes)");
-							e.printStackTrace();
+						if(input_thread.get_labelings_found() == 0){
+							push_graph_to_files(possible_labeling, output_path);
 						}
-						/*
-							Push the edge set to a csv file that gephi can import
-						*/
-						try{
-							File edge_set_file = new File(String.format("%s_Edge_Set.csv", output_path));
-							edge_set_file.createNewFile();
-							try(FileWriter output_edge_set_stream = new FileWriter(String.format("%s_Edge_Set.csv", output_path))){
-								output_edge_set_stream.write(output.get_edge_set_CSV());
-								output_edge_set_stream.close();
-							}catch(java.io.FileNotFoundException e){
-								System.out.println("Printing stack trace... (couldn't find the csv file for edges)");
-							}
-						}catch(IOException e){
-							System.out.println("Printing stack trace... (problem creating the csv file for edges)");
-							e.printStackTrace();
-						}
-						/*
-							NOW WE GET TO STOP!
-						*/
-						input_thread.stop();
+						input_thread.found_labeling();
+						//input_thread.stop();
 					}
 					/*
 						Now we delete the old permutation, and begin working towards the next iteration. It's a formality, however, that we have to first remove the fixed labeling value off of the end of the list
 					*/
 					current_working_list.remove(current_working_list.size()-1);
 					previous_valid_permutation = new ArrayList<>(current_working_list);
-					return output;
 				}
 			}else{
 				/*
@@ -195,6 +206,5 @@ public class Labeling_Finder_Utilities{
 					current_working_list.remove(current_working_list.size()-1);
 				}
 			}
-		return output;
 	}
 }

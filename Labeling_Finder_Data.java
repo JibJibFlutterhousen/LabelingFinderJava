@@ -13,11 +13,24 @@ public class Labeling_Finder_Data{
 	Edge_Relation fancy_K_4xK_2;
 	Edge_Relation K_4xK_2;
 	Edge_Relation Tree_1;
-	int[] U11 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	Edge_Relation fancy_square;
+
+	int[] U8 = { 1, 3, 5, 7 };
 	int[] U15 = { 1, 2, 4, 7, 8, 11, 13, 14 };
+	int[] U11 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	int[] U21 = { 1, 2, 4, 5, 8, 10, 11, 13, 16, 17, 19, 20 };
 	int[] U32 = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31 };
 	int[] U33 = { 1, 2, 4, 5, 7, 8, 10, 13, 14, 16, 17, 19, 20, 23, 25, 26, 28, 29, 31, 32 };
+	int[] U84 = { 1, 5, 11, 13, 17, 19, 23, 25, 29, 31, 37, 41, 43, 47, 53, 55, 59, 61, 65, 67, 71, 73, 79, 83 };
+	int[] U96 = { 1, 5, 7, 11, 13, 17, 19, 23, 25, 29, 31, 35, 37, 41, 43, 47, 49, 53, 55, 59, 61, 65, 67, 71, 73, 77, 79, 83, 85, 89, 91, 95 };
+	int[] U63 = { 1, 2, 4, 5, 8, 10, 11, 13, 16, 17, 19, 20, 22, 23, 25, 26, 29, 31, 32, 34, 37, 38, 40, 41, 43, 44, 46, 47, 50, 52, 53, 55, 58, 59, 61, 62 };
+	int[] U55 = { 1, 2, 3, 4, 6, 7, 8, 9, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 26, 27, 28, 29, 31, 32, 34, 36, 37, 38, 39, 41, 42, 43, 46, 47, 48, 49, 51, 52, 53, 54 };
+	int[] U92 = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 71, 73, 75, 77, 79, 81, 83, 85, 87, 89, 91 };
+	int[] U65 = { 1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 14, 16, 17, 18, 19, 21, 22, 23, 24, 27, 28, 29, 31, 32, 33, 34, 36, 37, 38, 41, 42, 43, 44, 46, 47, 48, 49, 51, 53, 54, 56, 57, 58, 59, 61, 62, 63, 64 };
+	int[] U87 = { 1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 22, 23, 25, 26, 28, 31, 32, 34, 35, 37, 38, 40, 41, 43, 44, 46, 47, 49, 50, 52, 53, 55, 56, 59, 61, 62, 64, 65, 67, 68, 70, 71, 73, 74, 76, 77, 79, 80, 82, 83, 85, 86 };
+	int[] U93 = { 1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 22, 23, 25, 26, 28, 29, 32, 34, 35, 37, 38, 40, 41, 43, 44, 46, 47, 49, 50, 52, 53, 55, 56, 58, 59, 61, 64, 65, 67, 68, 70, 71, 73, 74, 76, 77, 79, 80, 82, 83, 85, 86, 88, 89, 91, 92 };
+	int[] U85 = { 1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 18, 19, 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 36, 37, 38, 39, 41, 42, 43, 44, 46, 47, 48, 49, 52, 53, 54, 56, 57, 58, 59, 61, 62, 63, 64, 66, 67, 69, 71, 72, 73, 74, 76, 77, 78, 79, 81, 82, 83, 84 };
+	int[] U91 = { 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 27, 29, 30, 31, 32, 33, 34, 36, 37, 38, 40, 41, 43, 44, 45, 46, 47, 48, 50, 51, 53, 54, 55, 57, 58, 59, 60, 61, 62, 64, 66, 67, 68, 69, 71, 72, 73, 74, 75, 76, 79, 80, 81, 82, 83, 85, 86, 87, 88, 89, 90 };
 
 	public String get_graph_names(){
 		String output = "";
@@ -35,7 +48,8 @@ public class Labeling_Finder_Data{
 		"Fancy emerald\n" +
 		"Weird K_4xK_2\n" +
 		"K_4 x K_2" +
-		"Tree 1"
+		"Tree 1" + 
+		"Fancy square"
 		;
 
 		return output;
@@ -55,6 +69,24 @@ public class Labeling_Finder_Data{
 			output = U32;
 		}else if(relation_to_use.get_number_of_edges() == 20){
 			output = U33;
+		}else if(relation_to_use.get_number_of_edges() == 24){
+			output = U84;
+		}else if(relation_to_use.get_number_of_edges() == 32){
+			output = U96;
+		}else if(relation_to_use.get_number_of_edges() == 36){
+			output = U63;
+		}else if(relation_to_use.get_number_of_edges() == 40){
+			output = U55;
+		}else if(relation_to_use.get_number_of_edges() == 44){
+			output = U92;
+		}else if(relation_to_use.get_number_of_edges() == 48){
+			output = U65;
+		}else if(relation_to_use.get_number_of_edges() == 56){
+			output = U87;
+		}else if(relation_to_use.get_number_of_edges() == 60){
+			output = U93;
+		}else if(relation_to_use.get_number_of_edges() == 72){
+			output = U91;
 		}else{
 			System.out.printf("Graph not found!%n");
 			output = new int[0];
@@ -90,6 +122,8 @@ public class Labeling_Finder_Data{
 			return K_4xK_2;
 		}else if(input_request == "Tree 1"){
 			return Tree_1;
+		}else if(input_request == "Fancy square"){
+			return fancy_square;
 		}else{
 			System.out.printf("Graph not found!%n");
 			return new Edge_Relation(1);
@@ -122,6 +156,8 @@ public class Labeling_Finder_Data{
 			return 8;
 		}else if(input_request == "Tree 1"){
 			return 13;
+		}else if(input_request == "Fancy square"){
+			return 5;
 		}else{
 			System.out.printf("Graph not found!%n");
 			return -1;
@@ -157,6 +193,8 @@ public class Labeling_Finder_Data{
 			return false;
 		}else if(input_request == "Tree 1"){
 			return true;
+		}else if(input_request == "Fancy square"){
+			return false;
 		}else{
 			System.out.printf("Graph not found!%n");
 			return false;
@@ -420,6 +458,18 @@ public class Labeling_Finder_Data{
 			Tree_1.add_relation(5,10);
 			Tree_1.add_relation(6,11);
 			Tree_1.add_relation(6,12);
+		/*
+			this is the wheel with 4 spokes
+		*/
+		fancy_square = new Edge_Relation(8);
+			fancy_square.add_relation(0,1);
+			fancy_square.add_relation(1,2);
+			fancy_square.add_relation(2,3);
+			fancy_square.add_relation(3,0);
+			fancy_square.add_relation(4,0);
+			fancy_square.add_relation(4,1);
+			fancy_square.add_relation(4,2);
+			fancy_square.add_relation(4,3);
 	}
 
 }

@@ -6,7 +6,7 @@ import java.text.NumberFormat;
 
 public class test2{
 	public static void main(String args[]){		
-		String graph_to_label = "Tree 1";
+		String graph_to_label = "5 pointed wheel";
 		
 		/*
 			Set up the attributes that are dependent on our graph

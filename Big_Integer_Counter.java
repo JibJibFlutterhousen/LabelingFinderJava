@@ -28,7 +28,7 @@ public class Big_Integer_Counter{
 		return output;
 	}
 	public boolean show_update(){
-		BigInteger mod = counter.mod(max.divide(new BigInteger("1000")));
+		BigInteger mod = counter.mod(max.divide(new BigInteger("100")));
 		if((last_update_shown_time - System.currentTimeMillis()) > 10000){
 			return  true;
 		}

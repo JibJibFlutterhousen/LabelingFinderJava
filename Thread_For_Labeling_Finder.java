@@ -21,6 +21,7 @@ public class Thread_For_Labeling_Finder extends Thread{
 	private int fixed_label;
 	private String output_path;
 	private boolean is_tree;
+	private int labelings_found;
 
 	public void set_previous_valid_permutation(List<Integer> input){
 		this.previous_valid_permutation = input;
@@ -55,9 +56,35 @@ public class Thread_For_Labeling_Finder extends Thread{
 	public void set_is_tree(boolean input){
 		this.is_tree = input;
 	}
+	public void found_labeling(){
+		this.labelings_found++;
+	}
+	public int get_labelings_found(){
+		return this.labelings_found;
+	}
+
+	private void push_final_file(){
+		try{
+			String output_location = String.format("%s_final.txt", output_path);
+			String final_text = String.format("A total of %s labelings have been found in %s iterations%n", String.valueOf(labelings_found), loop_counter.get_counter());
+			File final_file = new File(output_location);
+			final_file.createNewFile();
+			try(FileWriter output_final_stream = new FileWriter(output_location)){
+				output_final_stream.write(final_text);
+				output_final_stream.close();
+			}catch(java.io.FileNotFoundException e){
+				System.out.printf("Printing stack trace... (couldn't find the txt file at location %s)%n", output_path);
+				e.printStackTrace();
+			}
+		}catch(IOException e){
+			System.out.printf("Printing stack trace... (problem creating the txt file at location %s)%n", output_path);
+			e.printStackTrace();
+		}
+	}
 
 	public void run(){
 		System.out.printf("%nForcing vertex [%s] to have value [%s]. ", String.valueOf(number_to_use), String.valueOf(fixed_label));
+		this.labelings_found = 0;
 		/*
 			First we must set up our labeling set. This means that we remove the fixed_label from the set
 			Note: we only do this in the event of a tree
@@ -80,21 +107,8 @@ public class Thread_For_Labeling_Finder extends Thread{
 		*/
 		Labeling_Finder_Utilities.test_all_labelings(previous_valid_permutation, current_working_list, array_to_permute, used_indexes, number_to_use, input_edge_relation, input_modulo, fixed_label, loop_counter, output_path, this);
 		/*
-			Push the fact that we didn't find any labelings to a file
+			Push the final file
 		*/
-		try{
-			File failure_file = new File(String.format("%s_failure.txt", output_path));
-			failure_file.createNewFile();
-			try(FileWriter output_failure_stream = new FileWriter(String.format("%s_failure.txt", output_path))){
-				String failure_text = String.format("No labelings found in %d iterations%n", loop_counter.get_counter());
-				output_failure_stream.write(failure_text);
-				output_failure_stream.close();
-			}catch(java.io.FileNotFoundException e){
-				System.out.println("Printing stack trace... (couldn't find the txt file for failure)");
-			}
-		}catch(IOException e){
-			System.out.println("Printing stack trace... (problem creating the txt file for failure)");
-			e.printStackTrace();
-		}
+		push_final_file();
 	}
 }
