@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.*;
 import java.math.BigInteger;
 import java.util.Locale;
@@ -6,7 +5,7 @@ import java.text.NumberFormat;
 
 public class LabelingFinder{
 	public static void main(String args[]){		
-		String graph_to_label = "5 pointed wheel";
+		String graph_to_label = "Fancy square";
 		/*
 			Set up the attributes that are dependent on our graph
 		*/

@@ -14,14 +14,19 @@ public class Labeling_Finder_Data{
 	Edge_Relation K_4xK_2;
 	Edge_Relation Tree_1;
 	Edge_Relation fancy_square;
+	Edge_Relation fancy_pseudotriangle;
+	Edge_Relation c_11;
+	Edge_Relation k_6_snake;
 
 	int[] U8 = { 1, 3, 5, 7 };
 	int[] U15 = { 1, 2, 4, 7, 8, 11, 13, 14 };
+	int[] U24 = { 1, 5, 7, 11, 13, 17, 19, 23 };
 	int[] U11 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	int[] U21 = { 1, 2, 4, 5, 8, 10, 11, 13, 16, 17, 19, 20 };
 	int[] U32 = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31 };
 	int[] U33 = { 1, 2, 4, 5, 7, 8, 10, 13, 14, 16, 17, 19, 20, 23, 25, 26, 28, 29, 31, 32 };
 	int[] U84 = { 1, 5, 11, 13, 17, 19, 23, 25, 29, 31, 37, 41, 43, 47, 53, 55, 59, 61, 65, 67, 71, 73, 79, 83 };
+	int[] U31 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
 	int[] U96 = { 1, 5, 7, 11, 13, 17, 19, 23, 25, 29, 31, 35, 37, 41, 43, 47, 49, 53, 55, 59, 61, 65, 67, 71, 73, 77, 79, 83, 85, 89, 91, 95 };
 	int[] U63 = { 1, 2, 4, 5, 8, 10, 11, 13, 16, 17, 19, 20, 22, 23, 25, 26, 29, 31, 32, 34, 37, 38, 40, 41, 43, 44, 46, 47, 50, 52, 53, 55, 58, 59, 61, 62 };
 	int[] U55 = { 1, 2, 3, 4, 6, 7, 8, 9, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 26, 27, 28, 29, 31, 32, 34, 36, 37, 38, 39, 41, 42, 43, 46, 47, 48, 49, 51, 52, 53, 54 };
@@ -31,7 +36,6 @@ public class Labeling_Finder_Data{
 	int[] U93 = { 1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 22, 23, 25, 26, 28, 29, 32, 34, 35, 37, 38, 40, 41, 43, 44, 46, 47, 49, 50, 52, 53, 55, 56, 58, 59, 61, 64, 65, 67, 68, 70, 71, 73, 74, 76, 77, 79, 80, 82, 83, 85, 86, 88, 89, 91, 92 };
 	int[] U85 = { 1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 18, 19, 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 36, 37, 38, 39, 41, 42, 43, 44, 46, 47, 48, 49, 52, 53, 54, 56, 57, 58, 59, 61, 62, 63, 64, 66, 67, 69, 71, 72, 73, 74, 76, 77, 78, 79, 81, 82, 83, 84 };
 	int[] U91 = { 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 27, 29, 30, 31, 32, 33, 34, 36, 37, 38, 40, 41, 43, 44, 45, 46, 47, 48, 50, 51, 53, 54, 55, 57, 58, 59, 60, 61, 62, 64, 66, 67, 68, 69, 71, 72, 73, 74, 75, 76, 79, 80, 81, 82, 83, 85, 86, 87, 88, 89, 90 };
-
 	public String get_graph_names(){
 		String output = "";
 
@@ -49,7 +53,10 @@ public class Labeling_Finder_Data{
 		"Weird K_4xK_2\n" +
 		"K_4 x K_2" +
 		"Tree 1" + 
-		"Fancy square"
+		"Fancy square" + 
+		"Fancy Pseudotriangle" +
+		"12 edged cycle" +
+		"K_6 Snake"
 		;
 
 		return output;
@@ -59,8 +66,10 @@ public class Labeling_Finder_Data{
 		int[] output;
 		Edge_Relation relation_to_use = get_edge_relation(input_request);
 
-		if(relation_to_use.get_number_of_edges() == 8){
-			output = U15;
+		if(relation_to_use.get_number_of_edges() == 4){
+			output = U8;
+		}else if(relation_to_use.get_number_of_edges() == 8){
+			output = U24;
 		}else if(relation_to_use.get_number_of_edges() == 10){
 			output = U11;
 		}else if(relation_to_use.get_number_of_edges() == 12){
@@ -71,6 +80,8 @@ public class Labeling_Finder_Data{
 			output = U33;
 		}else if(relation_to_use.get_number_of_edges() == 24){
 			output = U84;
+		}else if(relation_to_use.get_number_of_edges() == 30){
+			output = U31;
 		}else if(relation_to_use.get_number_of_edges() == 32){
 			output = U96;
 		}else if(relation_to_use.get_number_of_edges() == 36){
@@ -88,7 +99,7 @@ public class Labeling_Finder_Data{
 		}else if(relation_to_use.get_number_of_edges() == 72){
 			output = U91;
 		}else{
-			System.out.printf("Graph not found!%n");
+			System.out.printf("Graph not found!(in get_labeling_set%n");
 			output = new int[0];
 		}
 
@@ -124,8 +135,14 @@ public class Labeling_Finder_Data{
 			return Tree_1;
 		}else if(input_request == "Fancy square"){
 			return fancy_square;
+		}else if(input_request == "Fancy Pseudotriangle"){
+			return fancy_pseudotriangle;
+		}else if(input_request == "12 edged cycle"){
+			return c_11;
+		}else if(input_request == "K_6 Snake"){
+			return k_6_snake;
 		}else{
-			System.out.printf("Graph not found!%n");
+			System.out.printf("Graph not found!(in get_edge_relation)%n");
 			return new Edge_Relation(1);
 		}
 	}
@@ -158,8 +175,14 @@ public class Labeling_Finder_Data{
 			return 13;
 		}else if(input_request == "Fancy square"){
 			return 5;
+		}else if(input_request == "Fancy Pseudotriangle"){
+			return 3;
+		}else if(input_request == "12 edged cycle"){
+			return 12;
+		}else if(input_request == "K_6 Snake"){
+			return 30;
 		}else{
-			System.out.printf("Graph not found!%n");
+			System.out.printf("Graph not found!(in get_number_of_vertexes_in)%n");
 			return -1;
 		}
 	}
@@ -195,8 +218,14 @@ public class Labeling_Finder_Data{
 			return true;
 		}else if(input_request == "Fancy square"){
 			return false;
+		}else if(input_request == "Fancy Pseudotriangle"){
+			return false;
+		}else if(input_request == "12 edged cycle"){
+			return false;
+		}else if(input_request == "K_6 Snake"){
+			return false;
 		}else{
-			System.out.printf("Graph not found!%n");
+			System.out.printf("Graph not found!(in is_tree)%n");
 			return false;
 		}
 	}
@@ -470,6 +499,64 @@ public class Labeling_Finder_Data{
 			fancy_square.add_relation(4,1);
 			fancy_square.add_relation(4,2);
 			fancy_square.add_relation(4,3);
+		/*
+			this is the fancy triangle with one loop
+		*/
+		fancy_pseudotriangle = new Edge_Relation(4);
+			fancy_pseudotriangle.add_relation(0,0);
+			fancy_pseudotriangle.add_relation(0,1);
+			fancy_pseudotriangle.add_relation(0,2);
+			fancy_pseudotriangle.add_relation(1,2);
+		/*
+			this is the 12 edged cycle
+		*/
+		c_11 = new Edge_Relation(12);
+			c_11.add_relation(0,1);
+			c_11.add_relation(1,2);
+			c_11.add_relation(2,3);
+			c_11.add_relation(3,4);
+			c_11.add_relation(4,5);
+			c_11.add_relation(5,6);
+			c_11.add_relation(6,7);
+			c_11.add_relation(7,8);
+			c_11.add_relation(8,9);
+			c_11.add_relation(9,10);
+			c_11.add_relation(10,11);
+			c_11.add_relation(11,0);
+		/*
+			this is K_6 snake
+		*/
+		k_6_snake = new Edge_Relation(30);
+			k_6_snake.add_relation(0,1);
+			k_6_snake.add_relation(0,2);
+			k_6_snake.add_relation(0,3);
+			k_6_snake.add_relation(0,4);
+			k_6_snake.add_relation(0,5);
+			k_6_snake.add_relation(1,2);
+			k_6_snake.add_relation(1,3);
+			k_6_snake.add_relation(1,4);
+			k_6_snake.add_relation(1,5);
+			k_6_snake.add_relation(2,3);
+			k_6_snake.add_relation(2,4);
+			k_6_snake.add_relation(2,5);
+			k_6_snake.add_relation(3,4);
+			k_6_snake.add_relation(3,5);
+			k_6_snake.add_relation(4,5);
+			k_6_snake.add_relation(2,6);
+			k_6_snake.add_relation(2,7);
+			k_6_snake.add_relation(2,8);
+			k_6_snake.add_relation(2,9);
+			k_6_snake.add_relation(2,10);
+			k_6_snake.add_relation(6,7);
+			k_6_snake.add_relation(6,8);
+			k_6_snake.add_relation(6,9);
+			k_6_snake.add_relation(6,10);
+			k_6_snake.add_relation(7,8);
+			k_6_snake.add_relation(7,9);
+			k_6_snake.add_relation(7,10);
+			k_6_snake.add_relation(8,9);
+			k_6_snake.add_relation(8,10);
+			k_6_snake.add_relation(9,10);
 	}
 
 }

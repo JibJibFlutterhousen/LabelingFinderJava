@@ -1,10 +1,6 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.math.BigInteger;
-import java.math.*;
-import java.util.Locale;
-import java.text.NumberFormat;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
@@ -171,7 +167,7 @@ public class Labeling_Finder_Utilities{
 							push_graph_to_files(possible_labeling, output_path);
 						}
 						input_thread.found_labeling();
-						//input_thread.stop();
+						input_thread.stop();
 					}
 					/*
 						Now we delete the old permutation, and begin working towards the next iteration. It's a formality, however, that we have to first remove the fixed labeling value off of the end of the list

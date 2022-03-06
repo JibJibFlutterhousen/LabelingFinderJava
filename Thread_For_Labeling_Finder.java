@@ -1,10 +1,5 @@
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.math.BigInteger;
-import java.math.*;
-import java.util.Locale;
-import java.text.NumberFormat;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
